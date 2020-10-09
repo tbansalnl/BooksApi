@@ -1,0 +1,10 @@
+<html>
+<head></head>
+<body>
+<h2>Search your book</h2>
+<div>Enter book's keyword: <input [(ngModel)]="SearchResult"></div>
+<button type="button" (click)="makeRequest()">Search</button>
+<div *ngIf="loading">loading...</div>
+<pre>{{data | json}}</pre>
+</body>
+</html>

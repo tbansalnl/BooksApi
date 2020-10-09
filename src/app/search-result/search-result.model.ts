@@ -1,0 +1,19 @@
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+export class SearchResult {
+  id: string;
+  title: string;
+  description: string;
+  thumbnailUrl: string;
+  videoUrl: string;
+
+  constructor(obj?: any) {
+    this.id              = obj && obj.id             || null;
+    this.title           = obj && obj.title          || null;
+    this.description     = obj && obj.description    || null;
+    this.thumbnailUrl    = obj && obj.thumbnailUrl   || null;
+    this.videoUrl        = obj && obj.videoUrl       ||
+      `https://www.googleapis.com/books/v1/volumes?q=ingaang=${this.id}`;
+  }
+}
