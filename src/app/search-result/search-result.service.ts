@@ -24,11 +24,7 @@ export class SearchResultService {
 
   search(query: string): Observable<SearchResult[]> {
     const params: string = [
-      `q=${query}`,
-      `key=${this.apiKey}`,
-      `part=snippet`,
-      `type=text`,
-      `maxResults=10`
+
     ].join('&');
     const queryUrl = `${this.apiUrl}?${params}`;
     return this.http.get(queryUrl).map(response => {

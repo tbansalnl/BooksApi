@@ -1,32 +1,62 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { SearchResult } from './search-result.model';
-import {
-  SearchResultService,
-  GOOGLE_API_KEY,
-  GOOGLE_API_URL
-} from './search-result.service';
+import {Component, OnInit, Input} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {SearchResult} from './search-result.model';
+
 @Component({
   selector: 'app-search-result',
-  templateUrl: './search-result.component.html'
+  templateUrl: './search-result.component.html',
+  styles: ['../app.component.css'],
 })
 export class SearchResultComponent implements OnInit {
-  data: Object;
+  searchResults: SearchResult[];
+  userquery: string;
   loading: boolean;
+  private apiKey: string;
+  private apiUrl: string;
+
 
   constructor(private http: HttpClient) {
+    this.apiKey = '20201007110042';
+    this.apiUrl = 'https://www.googleapis.com/books/v1/volumes';
   }
 
   ngOnInit() {
   }
 
   makeRequest(): void {
+    const params: string = [
+      `q=${this.userquery}`,
+      `maxResults=10`
+    ].join('&');
+    const queryUrl = `${this.apiUrl}?${params}`;
     this.loading = true;
-    this.http
-      .get('https://www.googleapis.com/books/v1/volumes?q=ingaang')
+    let getResults = this.http
+      .get(queryUrl);
+    console.log(' I am printing getResults');
+    console.log(getResults);
+    console.log(' I have printed getResults');
+    getResults.map(response => {
+      console.log(' I am printing response');
+      console.log(response);
+      console.log(' I have printed response');
+      return response['items'].map(item => {
+          console.log(' I am printing item');
+          console.log(item);
+          console.log(' I have printed item');
+          return new SearchResult({
+            id: item.id,
+            title: item.volumeInfo.title,
+            author: item.volumeInfo.authors,
+            publisher: item.volumeInfo.publisher,
+            description: item.volumeInfo.description
+          });
+        }
+      );
+    })
       .subscribe(data => {
-        this.data = data;
+        this.searchResults = data;
         this.loading = false;
       });
   }
+
 }
