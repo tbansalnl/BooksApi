@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "BooksUI"
+    }
+  },
+  "defaultProject": "BooksUI",
+  "cli": {
+    "analytics": "471e27ec-478f-4b5a-8746-6ab0a11827a5"
+  }
 }
