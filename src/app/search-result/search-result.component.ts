@@ -25,9 +25,11 @@ export class SearchResultComponent implements OnInit {
   }
 
   makeRequest(): void {
+    console.log(this.noofpages);
+    let n = this.noofpages == null || this.noofpages.trim().length === 0 ? '10' : this.noofpages;
     const params: string = [
       `q=${this.userquery}`,
-      `maxResults=${this.noofpages}`
+      `maxResults=${n}`
     ].join('&');
     const queryUrl = `${this.apiUrl}?${params}`;
     this.loading = true;

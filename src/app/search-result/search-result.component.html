@@ -8,6 +8,7 @@
 <div *ngIf="loading">loading...</div>
 <table style="border:1px solid grey;width:100%">
   <thead>
+  <th>S.No</th>
   <th>Id</th>
   <th>Title</th>
   <th>Author</th>
@@ -16,7 +17,10 @@
 
   </thead>
   <tbody>
-  <tr *ngFor="let item of searchResults">
+  <tr *ngFor="let item of searchResults;index as i;">
+    <td>
+      {{i+1}}
+    </td>
     <td>
       {{item.id}}
     </td>
@@ -32,11 +36,7 @@
     <td>
       {{item.description}}
     </td>
-
-  </tr>
-
   </tbody>
-
 </table>
 </body>
 </html>
