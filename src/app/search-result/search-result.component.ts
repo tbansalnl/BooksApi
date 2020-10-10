@@ -5,12 +5,13 @@ import {SearchResult} from './search-result.model';
 @Component({
   selector: 'app-search-result',
   templateUrl: './search-result.component.html',
-  styles: ['../app.component.css'],
+  styles: ['app.component.css'],
 })
 export class SearchResultComponent implements OnInit {
   searchResults: SearchResult[];
   userquery: string;
   loading: boolean;
+  noofpages: string;
   private apiKey: string;
   private apiUrl: string;
 
@@ -26,7 +27,7 @@ export class SearchResultComponent implements OnInit {
   makeRequest(): void {
     const params: string = [
       `q=${this.userquery}`,
-      `maxResults=10`
+      `maxResults=${this.noofpages}`
     ].join('&');
     const queryUrl = `${this.apiUrl}?${params}`;
     this.loading = true;
@@ -43,13 +44,18 @@ export class SearchResultComponent implements OnInit {
           console.log(' I am printing item');
           console.log(item);
           console.log(' I have printed item');
-          return new SearchResult({
-            id: item.id,
-            title: item.volumeInfo.title,
-            author: item.volumeInfo.authors,
-            publisher: item.volumeInfo.publisher,
-            description: item.volumeInfo.description
-          });
+          let result =
+            new SearchResult({
+              id: item.id,
+              title: item.volumeInfo.title,
+              author: item.volumeInfo.authors,
+              publisher: item.volumeInfo.publisher,
+              description: item.volumeInfo.description
+            });
+          if (result.description != null && result.description.length > 50) {
+            result.description = result.description.substring(0, 50);
+          }
+          return result;
         }
       );
     })

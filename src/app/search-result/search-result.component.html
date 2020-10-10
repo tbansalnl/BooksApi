@@ -3,6 +3,7 @@
 <body>
 <h2>Search your book</h2>
 <div>Enter book's keyword: <input [(ngModel)]="userquery"></div>
+<div>Enter number of results <input [(ngModel)]="noofpages"></div>
 <button type="button" (click)="makeRequest()">Search</button>
 <div *ngIf="loading">loading...</div>
 <table style="border:1px solid grey;width:100%">
